@@ -1,0 +1,16 @@
+ For detialed explanation on how to run this project, please refer to the README.md file.
+ Follow the below steps to set up and run the project locally:
+ 1. Open this project in two separate terminal windows.
+ 2. In the first terminal, navigate to the 'adk-ui' directory and run:
+    cd adk-ui
+    npm install
+    npm run dev
+ 3. In the second terminal, navigate to the google-map-adk directory and run:
+    python -m pip install -r ./requirements.txt
+    py -m uvicorn server:app
+         OR,
+    py -m uvicorn server:app --reload --port 8080
+         OR()/If main method is present in server.py
+    py server.py
+ The default server port for backend is set to 8080. If you need to change it, update the PORT variable above.
+ The default Frontend URL is set to http://localhost:3000.

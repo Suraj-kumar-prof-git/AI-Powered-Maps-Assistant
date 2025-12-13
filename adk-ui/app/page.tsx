@@ -269,7 +269,7 @@ export default function Home() {
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         role: 'assistant',
-        content: `Error: Failed to communicate with ADK server. Please ensure the server is running on http://localhost:8000`,
+        content: `Error: Failed to communicate with ADK server. Please ensure the server is running on http://localhost:8080`,
         timestamp: new Date(),
       };
 

@@ -3,6 +3,6 @@ google-adk
 
 # Additional dependencies that might be needed
 # Uncomment if you encounter import errors
-# fastapi
-# uvicorn
+fastapi
+uvicorn
 # python-multipart

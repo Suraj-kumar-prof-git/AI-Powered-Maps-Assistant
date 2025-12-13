@@ -5,7 +5,8 @@ import uuid
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
 from google.genai import types
-from agent import root_agent, McpToolset
+from agent import root_agent
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -110,3 +111,8 @@ def list_apps():
         "available_tools": [tool.__class__.__name__ for tool in mcp_toolset],
         "message": "ADK server is operational"
     }
+if __name__ == "__main__":
+    import uvicorn
+
+    port = int(os.getenv("PORT", 8000))  # default to 8000 if not set
+    uvicorn.run("server:app", host="127.0.0.1", port=port, reload=True)

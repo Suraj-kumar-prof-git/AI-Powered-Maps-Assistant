@@ -162,7 +162,7 @@ GOOGLE_MAPS_API_KEY=your_api_key_here
 
 # Optional
 PORT=8080                    # Server port (default: 8080)
-GOOGLE_ADK_MODEL=gemini-2.0-flash  # AI model to use
+GOOGLE_ADK_MODEL=gemini-2.5-flash-lite  # AI model to use
 ```
 
 ### Google Maps API Setup
@@ -233,7 +233,7 @@ Google-Map-AI/
 ```bash
 # Backend development
 cd gmap-buddy
-python -m pip install -r ../requirements.txt
+python -m pip install -r ./requirements.txt
 python main.py
 
 # Frontend development (separate terminal)
@@ -257,7 +257,7 @@ npm run start    # Serves the production build
 curl http://localhost:8080/health
 
 # Test chat functionality
-curl -X POST http://localhost:8080/api/chat \
+curl -X POST http://localhost:8080/api/run \
   -H "Content-Type: application/json" \
   -d '{
     "message": "I want to plan a weekend trip from New York to Boston"

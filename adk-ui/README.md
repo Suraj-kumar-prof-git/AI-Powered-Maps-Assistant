@@ -13,7 +13,7 @@ A modern Next.js interface for communicating with Google Agent Development Kit (
 ## Prerequisites
 
 - Node.js 18+ and npm/yarn
-- Google ADK server running locally (typically on port 8000)
+- Google ADK server running locally (typically on port 8080)
 - A configured ADK agent
 
 ## Quick Start
@@ -52,7 +52,7 @@ Visit http://localhost:3000 to access the interface.
 Create a `.env.local` file in the root directory:
 
 ```env
-NEXT_PUBLIC_ADK_URL=http://localhost:8000
+NEXT_PUBLIC_ADK_URL=http://localhost:8080
 ```
 
 ### Session Configuration
@@ -131,10 +131,10 @@ Your ADK server should support these endpoints:
 
 ```bash
 # Health check
-curl http://localhost:8000/health
+curl http://localhost:8080/health
 
 # Send query
-curl -X POST http://localhost:8000/run \
+curl -X POST http://localhost:8080/run \
   -H "Content-Type: application/json" \
   -d '{
     "appName": "my_sample_agent",
