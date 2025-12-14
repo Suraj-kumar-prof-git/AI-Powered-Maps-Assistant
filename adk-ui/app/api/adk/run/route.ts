@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
     // First, ensure session exists
     try {
-      await fetch(`http://localhost:8000/apps/${body.appName}/users/${body.userId}/sessions/${body.sessionId}`, {
+      await fetch(`http://localhost:8080/apps/${body.appName}/users/${body.userId}/sessions/${body.sessionId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Forward the request to the ADK server with correct format
-    const response = await fetch('http://localhost:8000/run', {
+    const response = await fetch('http://localhost:8080/run', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

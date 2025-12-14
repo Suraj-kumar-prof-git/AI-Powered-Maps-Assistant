@@ -227,13 +227,15 @@ export default function Home() {
       if (events.error) {
         throw new Error(events.error);
       }
+
+      const eventsArray = events.response_events;
       
       // Find the final response from ADK events
       let finalResponseText = 'No response received from agent.';
       
-      if (Array.isArray(events)) {
+      if (Array.isArray(eventsArray)) {
         // Look for the last event with text content from the model
-        const textEvents = events.filter((event: any) => 
+        const textEvents = eventsArray.filter((event: any) => 
           event.content && 
           event.content.parts && 
           event.content.parts.length > 0 &&
@@ -267,7 +269,7 @@ export default function Home() {
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         role: 'assistant',
-        content: `Error: Failed to communicate with ADK server. Please ensure the server is running on http://localhost:8000`,
+        content: `Error: Failed to communicate with ADK server. Please ensure the server is running on http://localhost:8080`,
         timestamp: new Date(),
       };
 
