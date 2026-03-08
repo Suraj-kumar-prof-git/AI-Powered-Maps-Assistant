@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
+  const API_URL = process.env.API_URL || process.env.LOCAL_APP_URL || 'http://127.0.0.1:8000';
   try {
     // Test connectivity to ADK server using /list-apps endpoint
-    const response = await fetch('http://localhost:8080/list-apps', {
+    const response = await fetch(`${API_URL}/list-apps`, {
       method: 'GET',
     });
     
@@ -33,7 +34,7 @@ export async function GET() {
       { 
         status: 'disconnected', 
         error: 'Cannot reach ADK server',
-        message: `ADK server is not reachable on localhost:8080: ${errorMessage}`
+        message: `ADK server is not reachable on ${API_URL}: ${errorMessage}`
       },
       { 
         status: 500,

@@ -4,8 +4,9 @@ from google.adk.runners import Runner
 from google.genai import types
 import asyncio
 from dotenv import load_dotenv
+import os
 
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env.dev'))
 
 APP_NAME = "basic_agent_no_web"
 USER_ID = "user_12345"

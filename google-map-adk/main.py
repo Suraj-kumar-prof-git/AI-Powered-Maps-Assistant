@@ -1,4 +1,6 @@
+# This file u can run in your terminal and talk to the agent via terminal
 import asyncio
+from typing import Dict
 import uuid
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
@@ -11,11 +13,14 @@ import io
 load_dotenv()
 # Global variables for the session components
 runner: Runner = None
-session_service: InMemorySessionService = None
+active_sessions: Dict[str, Runner] = {}
 SESSION_ID: str = None
 USER_ID: str = "suraj_kumar"
 APP_NAME: str = "google_map_adk"
-mcp_toolset: McpToolset = root_agent.tools
+# Globals for session management
+session_service = InMemorySessionService()
+active_sessions: Dict[str, Runner] = {}
+mcp_toolset = root_agent.tools
 
 async def run_agent_session():
     """
@@ -48,14 +53,16 @@ async def initialize_session():
     """Sets up the initial session and runner."""
     global runner, session_service, SESSION_ID
     SESSION_ID = str(uuid.uuid4())
-    
-    session_service = InMemorySessionService()
-    await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=SESSION_ID)
-    
+    try:
+        await session_service.create_session(app_name=APP_NAME, user_id=USER_ID, session_id=SESSION_ID)
+    except Exception as e:
+        print(f"Error creating session in session_service: {e}")
+        raise
     runner = Runner(app_name=APP_NAME, agent=root_agent, session_service=session_service)
-    
+    active_sessions[SESSION_ID] = runner
     print(f"--- Session Initialized (ID: {SESSION_ID}) ---")
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    return runner
 
 async def run_agent_turn(prompt: str):
     """Runs the agent for a single turn with the given prompt."""
@@ -102,7 +109,21 @@ async def interactive_loop():
     finally:
         # Close the connection only when the user explicitly quits the loop
         print("Closing McpToolset connection...")
-        await mcp_toolset.close()
+        if isinstance(mcp_toolset, list):
+            for tool in mcp_toolset:
+                close_func = getattr(tool, 'close', None)
+                if close_func:
+                    if asyncio.iscoroutinefunction(close_func):
+                        await close_func()
+                    else:
+                        close_func()
+        else:
+            close_func = getattr(mcp_toolset, 'close', None)
+            if close_func:
+                if asyncio.iscoroutinefunction(close_func):
+                    await close_func()
+                else:
+                    close_func()
 
 def main():
     print("Executing agent using 'asyncio.run()'")
