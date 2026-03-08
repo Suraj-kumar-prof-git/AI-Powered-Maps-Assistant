@@ -4,7 +4,7 @@ from mcp import StdioServerParameters
 from prompt import instruction
 import os
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env.dev'))
 env = os.environ.copy()
 
 root_agent = LlmAgent(

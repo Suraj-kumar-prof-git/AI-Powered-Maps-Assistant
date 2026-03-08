@@ -273,8 +273,9 @@ pids
 .yarn-integrity
 
 # dotenv environment variables file
-.env.test
-.env.production
+.env.dev
+.env.prod
+.env
 
 # Storybook build outputs
 .out
